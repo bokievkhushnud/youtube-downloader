@@ -20,12 +20,12 @@ To work with youtube video streams I use <strong>pytube</strong>
   <li>Run the comannd python manage.py runserver</li>
   <li>Go to localhost or 127.0.0.1:8000</li>
 </ul>
-#### If you don't have venv or you can not run the venv:
+
+### If you don't have venv or you can not run the venv:
 <ul>
   <li>Clone or Download the repository to your local machine</li>
   <li>Open the folder, and run pip install -r requirements.txt</li>
   <li>Then you need to change line 273 inside cipher.py to r'\([a-z]\s*=\s*([a-zA-Z0-9$]+)(\[\d+\])?\([a-z]\)',
-
  </li>
   <li>Run the comannd python manage.py runserver</li>
   <li>Go to localhost or 127.0.0.1:8000</li>
