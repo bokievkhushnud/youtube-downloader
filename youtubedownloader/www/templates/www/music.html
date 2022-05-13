@@ -1,0 +1,64 @@
+{% extends './main.html' %}
+{% load mathfilters %}
+{% block content %}
+<div
+	class="bg-white border border-black border-width-2 border-radius-0 mt-3 d-flex flex-column justify-content-center align-items-center py-4">
+	<h2 class="text-muted">YouTube To mp3 Converter</h2>
+	<form class="row d-flex align-items-center my-3 g-1" style="width: 60%;" action="{% url 'audio' %}" method="post">
+		{% csrf_token %}
+		<div class="col-10">
+			<div class="input-group input-group-lg ">
+				<input type="text" class="form-control" id="inlineFormInputGroupUsername" name="link"
+					placeholder="Paste youtube link here" value="{{link}}" style="outline:none;" autocomplete="off">
+			</div>
+		</div>
+		<div class="col-2">
+			<button type="submit" class="btn btn-primary px-4 btn-lg">Start</button>
+		</div>
+		<p class="text-danger text-center mt-2">{{er}}</p>
+	</form>
+	<p class="text-muted">By using our service you are accepting our terms of service.</p>
+
+	{% if link %}
+	<div class="row mt-3 d-flex flex-wrap p-2">
+		<div class="col-lg-6 mb-3">
+			<img src="{{yt.thumbnail_url}}" class="img-fluid" alt="thumbnail">
+			<p class="text-center mt-3 mb-1">{{yt.title}}</p>
+			<p class="text-center">Duration: {{duration}} minutes</p>
+		</div>
+		<div class="col-lg-6">
+			<!-- audio -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Quality</th>
+						<th scope="col">File Size</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in mp3 %}
+					<tr>
+						<td>{{i.abr}}</td>
+						<td>{{i.filesize|div:1000000|floatformat:'-2'}} MB</td>
+						<td>
+							<form action="{% url 'home' %}" , method="POST">
+								{% csrf_token %}
+								<input type="hidden" name="itag" value="{{i.itag}}">
+								<input type="hidden" name="link" value="{{link}}">
+								<input type="hidden" name="format" value=".mp3">
+								<input type="submit" class="btn btn-primary btn-sm" value="Download">
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>
+
+{% endif %}
+</div>
+{% endblock content %}
